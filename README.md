@@ -395,77 +395,88 @@ expanded_df = pd.concat(expanded_df.tolist(), ignore_index=True)
 ```
 Korean Real Estate Project/
 │
-├── data/                                    # Data Storage (2.5GB)
-│   ├── raw/                                 # Original data files
-│   │   ├── seoul_oneroom_lease_data.xlsx    # 원룸 전세 데이터
-│   │   ├── seoul_oneroom_monthly_rent_data.xlsx # 원룸 월세 데이터
-│   │   ├── seoul_oneroom_Sale_data.xlsx     # 원룸 매매 데이터
-│   │   ├── 서울시_아파트_매매.xlsx            # 아파트 매매 데이터
-│   │   ├── 서울시_아파트_월세.xlsx            # 아파트 월세 데이터
-│   │   ├── 서울시_상가_매매.xlsx              # 상가 매매 데이터
-│   │   ├── 서울시_상가_월세.xlsx              # 상가 월세 데이터
-│   │   ├── 서울시_상가_전세.xlsx              # 상가 전세 데이터
-│   │   ├── GDP 성장률_2013_2023.xlsx         # GDP 성장률 (11년)
-│   │   ├── 기준금리_2013_2023.xlsx           # 한국은행 기준금리
-│   │   ├── 소비자물가_환율_2013_2023.xlsx     # 물가지수 & 환율
-│   │   ├── 1인당 국민총소득_2013_2023_달러.xlsx # GNI per capita
-│   │   ├── 국내총생산과 지출_2012_2022.xlsx   # GDP 구성 요소
-│   │   ├── 서울시_인구이동.xlsx               # 전입/전출 인구
-│   │   ├── 서울시_지하철_역세권_지가지수.xlsx  # 지하철역 지가지수
-│   │   └── 서울시_유형별_투자수익률_2014_2023.xlsx # ROI by property type
-│   │
-│   ├── processed/                           # Cleaned & transformed data
-│   └── economic/                            # Macroeconomic time-series
+├── data/                                    # Data Storage (~2.5GB)
+│   ├── seoul_oneroom_lease_data.xlsx        # One-room lease (jeonse) data
+│   ├── seoul_oneroom_monthly_rent_data.xlsx # One-room monthly rent data
+│   ├── seoul_oneroom_Sale_data.xlsx         # One-room sale data
+│   ├── 서울시_아파트_매매.xlsx                # Seoul apartment sales
+│   ├── 서울시_아파트_월세.xlsx                # Seoul apartment monthly rent
+│   ├── 서울시_상가_매매.xlsx                  # Seoul commercial sales
+│   ├── 서울시_상가_월세.xlsx                  # Seoul commercial monthly rent
+│   ├── 서울시_상가_전세.xlsx                  # Seoul commercial lease (jeonse)
+│   ├── GDP 성장률_2013_2023.xlsx             # GDP growth rate (2013-2023)
+│   ├── 기준금리_2013_2023.xlsx               # Base interest rate (BOK)
+│   ├── 소비자물가_환율_2013_2023.xlsx         # CPI & exchange rate
+│   ├── 1인당 국민총소득_2013_2023_달러.xlsx   # GNI per capita (USD)
+│   ├── 국내총생산과 지출_2012_2022.xlsx       # GDP components & expenditure
+│   ├── 서울시_인구이동.xlsx                   # Seoul population migration
+│   ├── 서울시_인구통계.xlsx                   # Seoul population statistics
+│   ├── 서울시_지하철_역세권_지가지수.xlsx      # Land value by subway station
+│   ├── 서울시_유형별_투자수익률_2014_2023.xlsx # ROI by property type
+│   ├── 서울시_모든유형_거래건수.xlsx          # Transaction count (all types)
+│   ├── 서울시_모든유형_거래면적.xlsx          # Transaction area (all types)
+│   ├── 물가상승률_물가지수_환율.xlsx          # Inflation, CPI, exchange rate
+│   ├── 소비자물가 상승률.xlsx                 # CPI inflation rate
+│   ├── 서울 월간 매매 가격 지수 *.xlsx        # Monthly sale price index (4 files)
+│   ├── 서울 월간 월세 가격 지수 *.xlsx        # Monthly rent price index (4 files)
+│   ├── 서울 월간 전세 가격 지수 *.xlsx        # Monthly lease price index (4 files)
+│   ├── 서울 중위 매매 가격 *.xlsx             # Median sale price (4 files)
+│   ├── 서울 중위 월세 가격 *.xlsx             # Median rent price (4 files)
+│   └── 서울 중위 전세 가격 *.xlsx             # Median lease price (4 files)
 │
 ├── src/                                     # Source Code
-│   ├── data_collection/                    # Web Scraping & API Integration
-│   │   ├── project ex.py                   # Zigbang API scraper (main engine)
-│   │   ├── project file.py                 # Transaction history expander
-│   │   ├── project_concat.py               # Multi-file merger
-│   │   ├── seoul_oneroom_lease_data.py     # One-room lease data loader
-│   │   ├── seoul_oneroom_monthly_rent_data.py # One-room monthly rent loader
-│   │   ├── seoul_oneroom_Sale_data.py      # One-room sale data loader
-│   │   ├── 서울시_아파트_매매.py             # Apartment sale data loader
-│   │   ├── 서울시_아파트_월세.py             # Apartment monthly rent loader
-│   │   ├── 서울시_상가_매매.py               # Commercial sale data loader
-│   │   ├── 서울시_상가_월세.py               # Commercial monthly rent loader
-│   │   └── 서울시_상가_전세.py               # Commercial lease data loader
+│   ├── data_collection/                     # Web Scraping & API Integration
+│   │   ├── project ex.py                    # Zigbang API scraper (IDs 800K-846K)
+│   │   ├── project ex1.py ~ ex8.py          # Additional scraping ranges
+│   │   ├── project file.py                  # Transaction history expander
+│   │   ├── project_concat.py                # Multi-file merger
+│   │   ├── seoul_oneroom_lease_data.py      # One-room lease data loader
+│   │   ├── seoul_oneroom_monthly_rent_data.py # One-room rent data loader
+│   │   ├── seoul_oneroom_Sale_data.py       # One-room sale data loader
+│   │   ├── 서울시_아파트_매매.py              # Apartment sale data loader
+│   │   ├── 서울시_아파트_월세.py              # Apartment rent data loader
+│   │   ├── 서울시_상가_매매.py                # Commercial sale data loader
+│   │   ├── 서울시_상가_월세.py                # Commercial rent data loader
+│   │   ├── 서울시_상가_전세.py                # Commercial lease data loader
+│   │   ├── 서울시_상가정보.py                 # Commercial property info loader
+│   │   ├── 한국부동산원_부동산거래현황_아파트매매 거래현황_월별 거래규모별(면적).py  # KRB apartment data
+│   │   └── 한국부동산원_부동산거래현황_토지매매 거래현황_월별 거래규모별(면적).py     # KRB land data
 │   │
-│   ├── data_processing/                    # ETL & Feature Engineering
-│   │   └── (Data transformation scripts)
+│   ├── data_processing/                     # ETL & Feature Engineering
+│   │   └── (Reserved for future preprocessing scripts)
 │   │
-│   ├── visualization/                      # Chart Generation
-│   │   ├── GDP 금리 물가.py                 # Combined economic indicators
-│   │   ├── GDP 성장률_2013_2023.py         # GDP growth rate chart
-│   │   ├── 기준금리_2013_2023.py           # Interest rate trends
-│   │   ├── 소비자물가 상승률.py             # CPI inflation rate
-│   │   ├── 소비자물가_환율_2013_2023.py     # CPI & exchange rate
-│   │   ├── 물가상승률_물가지수_환율.py       # Triple indicator chart
-│   │   └── 서울시_인구이동 선 그래프.py      # Population migration line chart
+│   ├── visualization/                       # Chart Generation
+│   │   ├── GDP 금리 물가.py                  # Combined economic indicators dashboard
+│   │   ├── GDP 성장률_2013_2023.py          # GDP growth rate visualization
+│   │   ├── 기준금리_2013_2023.py            # Interest rate trends
+│   │   ├── 1인당 국민총소득_2013_2023_달러.py # GNI per capita chart
+│   │   ├── 국내총생산과 지출_2012_2022.py    # GDP expenditure breakdown
+│   │   ├── 소비자물가 상승률.py              # CPI inflation rate chart
+│   │   ├── 소비자물가_환율_2013_2023.py      # CPI & exchange rate dual chart
+│   │   └── 물가상승률_물가지수_환율.py        # Triple indicator chart
 │   │
-│   └── analysis/                           # Statistical Analysis
-│       ├── 서울시_모든유형_거래건수.py        # Transaction count analysis
-│       ├── 서울시_모든유형_거래면적.py        # Transaction area analysis
-│       ├── 서울시_유형별_투자수익률_2014_2023.py # ROI analysis by type
-│       ├── 서울시_인구이동.py                # Population flow analysis
-│       └── 서울시_지하철_역세권_지가지수.py   # Subway station land value
+│   └── analysis/                            # Statistical Analysis
+│       ├── 서울시_모든유형_거래건수.py         # Transaction count analysis
+│       ├── 서울시_모든유형_거래면적.py         # Transaction area analysis
+│       ├── 서울시_유형별_투자수익률_2014_2023.py # ROI analysis by property type
+│       ├── 서울시_인구이동.py                 # Population migration flow analysis
+│       └── 서울시_지하철_역세권_지가지수.py    # Subway station land value index
 │
-├── notebooks/                              # Jupyter Notebooks
-│   ├── 서울시 아파트 매매.ipynb              # Apartment sale analysis
-│   ├── 서울시 아파트 월세.ipynb              # Apartment rental analysis
-│   ├── 직방 데이터 전처리 코드.ipynb          # Zigbang data preprocessing
-│   └── 원룸, 빌라, 오피스텔 지도.ipynb       # One-room property mapping
+├── notebooks/                               # Jupyter Notebooks
+│   ├── 서울시 아파트 매매.ipynb               # Seoul Apartment Sale Analysis
+│   ├── 서울시 아파트 월세.ipynb               # Seoul Apartment Rental Analysis
+│   ├── 직방 데이터 전처리 코드.ipynb           # Zigbang Data Preprocessing
+│   └── 원룸, 빌라, 오피스텔 지도.ipynb        # One-room Property Interactive Map
 │
-├── outputs/                                # Generated Results
-│   ├── maps/                               # HTML interactive maps
-│   └── charts/                             # PNG/SVG charts
+├── docs/                                    # Documentation
+│   └── (Reserved for technical specifications)
 │
-├── docs/                                   # Documentation
-│   └── (Technical specifications)
+├── real_estate_project-main/                # Original source files (legacy)
+│   └── (Original unorganized project files)
 │
-├── requirements.txt                        # Python dependencies
-├── README.md                               # This file
-└── LICENSE                                 # MIT License
+├── requirements.txt                         # Python dependencies
+├── README.md                                # Project documentation
+└── .git/                                    # Git repository
 ```
 
 ### File Naming Convention
@@ -473,16 +484,19 @@ Korean Real Estate Project/
 - **Python Scripts**: `{data_source}_{analysis_type}_{time_period}.py`
 - **Excel Files**: `{region}_{property_type}_{transaction_type}.xlsx`
 - **Notebooks**: `{region} {analysis_focus}.ipynb`
+- **Korean Filenames**: All Korean filenames have English descriptions in comments
 
-### Data Size Breakdown
+### Directory Statistics
 
-| Directory | Size | Files | Description |
-|-----------|------|-------|-------------|
-| `data/raw/` | ~2.2 GB | 40+ | Original Excel files from APIs |
-| `data/processed/` | ~1.8 GB | 15+ | Cleaned & merged datasets |
-| `notebooks/` | ~150 MB | 4 | Jupyter notebooks with outputs |
-| `src/` | ~5 MB | 30+ | Python scripts |
-| `outputs/` | ~200 MB | 50+ | Charts, maps, reports |
+| Directory | Files | Description |
+|-----------|-------|-------------|
+| `data/` | 43 | Excel files containing raw economic & real estate data |
+| `src/data_collection/` | 19 | Web scraping & API integration scripts |
+| `src/visualization/` | 13 | Economic indicator visualization scripts |
+| `src/analysis/` | 5 | Statistical analysis scripts |
+| `notebooks/` | 4 | Jupyter notebooks with interactive analysis |
+| **Total Python Files** | **37** | All Python scripts |
+| **Total Excel Files** | **43** | All data files |
 
 ---
 
@@ -835,7 +849,6 @@ if response.status_code == 200:
     plt.show()
 ```
 
-**Output**: ![Economic Dashboard Example](https://via.placeholder.com/900x300.png?text=CPI+Inflation+%7C+CPI+Index+%7C+Exchange+Rate)
 
 **Design Rationale**:
 - **3-Panel Layout**: Side-by-side comparison reveals correlations
@@ -1123,87 +1136,6 @@ print("✅ Interactive map saved!")
 
 ---
 
-## 🚀 Installation Guide
-
-### Prerequisites
-
-- **Python 3.8 or higher** ([Download](https://www.python.org/downloads/))
-- **pip** (Python package installer, included with Python 3.8+)
-- **Git** (optional, for cloning repository)
-
-### Option 1: Clone from GitHub (Recommended)
-
-```bash
-# Clone repository
-git clone https://github.com/yourusername/korean-real-estate-project.git
-
-# Navigate to project directory
-cd korean-real-estate-project
-
-# Create virtual environment (recommended)
-python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Verify installation
-python -c "import pandas; import folium; print('✅ Installation successful!')"
-```
-
-### Option 2: Manual Setup
-
-```bash
-# Create project directory
-mkdir korean-real-estate-project
-cd korean-real-estate-project
-
-# Download project files manually from GitHub
-
-# Create virtual environment
-python -m venv venv
-venv\Scripts\activate  # Windows
-source venv/bin/activate  # macOS/Linux
-
-# Install core dependencies
-pip install pandas numpy openpyxl requests matplotlib seaborn folium jupyter
-
-# Install additional packages
-pip install geopandas scipy statsmodels plotly
-```
-
-### Jupyter Notebook Setup
-
-```bash
-# Install Jupyter kernel
-python -m ipykernel install --user --name=realestate --display-name="Real Estate Analysis"
-
-# Launch Jupyter Notebook
-jupyter notebook
-
-# Open notebooks in the notebooks/ directory
-```
-
-### Data Setup
-
-```bash
-# Option A: Download pre-processed data from GitHub
-# (Data hosted at: https://github.com/aaqq8/SteadyEstate)
-
-# Option B: Run data collection scripts (requires 2-3 hours)
-cd src/data_collection
-python "project ex.py"  # Scrape Zigbang API
-python "project file.py"  # Expand transactions
-python "project_concat.py"  # Merge datasets
-```
-
----
-
 ## 💡 Usage Examples
 
 ### Example 1: Load and Explore Apartment Data
@@ -1349,79 +1281,6 @@ if response.status_code == 200:
 
 ---
 
-## 🔮 Future Roadmap
-
-### Phase 1: Enhanced Analytics (Q2 2024)
-- [ ] **Machine Learning Price Prediction**: Train regression models (XGBoost, Random Forest) for property valuation
-- [ ] **Time-Series Forecasting**: Implement ARIMA/SARIMA models for 6-month price projections
-- [ ] **Anomaly Detection**: Flag suspicious transactions using Isolation Forest
-- [ ] **Clustering Analysis**: K-means segmentation of districts by market characteristics
-
-### Phase 2: Real-Time Dashboard (Q3 2024)
-- [ ] **Streamlit Web App**: Deploy interactive dashboard with filters and visualizations
-- [ ] **Live Data Pipeline**: Automate daily data updates with GitHub Actions
-- [ ] **Alert System**: Email notifications for price anomalies or market shifts
-- [ ] **Comparative Analysis Tool**: Side-by-side district comparison interface
-
-### Phase 3: Advanced Features (Q4 2024)
-- [ ] **Natural Language Queries**: "Show me affordable apartments near Gangnam Station"
-- [ ] **Investment Recommendation Engine**: Portfolio optimization based on risk tolerance
-- [ ] **Policy Impact Analysis**: Quantify effects of government regulations on prices
-- [ ] **Social Media Sentiment**: Integrate Naver/Daum real estate forum data
-
-### Phase 4: Mobile & API (2025)
-- [ ] **REST API**: Expose data and analytics via RESTful endpoints
-- [ ] **Mobile App**: iOS/Android app for property search and alerts
-- [ ] **Public Dataset**: Release anonymized data on Kaggle for research community
-- [ ] **Academic Collaboration**: Partner with universities for urban economics research
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Here's how you can help:
-
-### Ways to Contribute
-
-1. **Data Sources**: Add new data sources (e.g., Naver Real Estate, government APIs)
-2. **Visualizations**: Create new charts or improve existing ones
-3. **Documentation**: Improve README, add code comments, write tutorials
-4. **Bug Fixes**: Report and fix issues in data processing or analysis
-5. **Feature Requests**: Suggest new analyses or visualizations
-
-### Contribution Workflow
-
-```bash
-# 1. Fork the repository on GitHub
-
-# 2. Clone your fork
-git clone https://github.com/yourusername/korean-real-estate-project.git
-
-# 3. Create a feature branch
-git checkout -b feature/add-new-visualization
-
-# 4. Make your changes
-# ... edit files ...
-
-# 5. Commit with descriptive message
-git add .
-git commit -m "Add choropleth map for commercial properties"
-
-# 6. Push to your fork
-git push origin feature/add-new-visualization
-
-# 7. Open a Pull Request on GitHub
-```
-
-### Code Style Guidelines
-
-- **Python**: Follow PEP 8 style guide
-- **Naming**: Use descriptive variable names (e.g., `avg_price_per_sqm` not `x`)
-- **Comments**: Explain "why" not "what" (code should be self-explanatory)
-- **Documentation**: Add docstrings for all functions
-
----
-
 ## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
@@ -1468,40 +1327,3 @@ SOFTWARE.
 - **Community**:
   - South Korea Maps GeoJSON repository for district boundaries
   - Contributors and issue reporters on GitHub
-
----
-
-## 📞 Contact & Support
-
-- **Project Maintainer**: [Your Name]
-- **Email**: your.email@example.com
-- **GitHub Issues**: [Report a bug or request a feature](https://github.com/yourusername/korean-real-estate-project/issues)
-- **Discussions**: [Join the conversation](https://github.com/yourusername/korean-real-estate-project/discussions)
-
----
-
-## 📊 Project Statistics
-
-![GitHub Stars](https://img.shields.io/github/stars/yourusername/korean-real-estate-project?style=social)
-![GitHub Forks](https://img.shields.io/github/forks/yourusername/korean-real-estate-project?style=social)
-![GitHub Issues](https://img.shields.io/github/issues/yourusername/korean-real-estate-project)
-![GitHub Pull Requests](https://img.shields.io/github/issues-pr/yourusername/korean-real-estate-project)
-![Last Commit](https://img.shields.io/github/last-commit/yourusername/korean-real-estate-project)
-
-**Total Lines of Code**: ~5,400 (Python + Jupyter)
-**Documentation Coverage**: 92%
-**Test Coverage**: 78%
-**Active Contributors**: 3
-**Project Duration**: 6 months (Aug 2023 - Jan 2024)
-
----
-
-<div align="center">
-
-**Made with ❤️ for Real Estate Data Enthusiasts**
-
-⭐ **Star this repository if you found it helpful!** ⭐
-
-[🏠 Visit Project Homepage](https://github.com/yourusername/korean-real-estate-project) | [📖 Read the Docs](https://github.com/yourusername/korean-real-estate-project/wiki) | [🐛 Report Bug](https://github.com/yourusername/korean-real-estate-project/issues)
-
-</div>
