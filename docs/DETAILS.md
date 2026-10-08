@@ -4,7 +4,7 @@ Deep-dive companion to the main [README](../README.md). Everything here is writt
 
 ## 1. Data collection (Zigbang API)
 
-Four scraper scripts polled four Zigbang endpoints in August 2024. Each is a standalone script with a simple sequential loop: request an ID, skip non-200 responses and empty payloads, append the `item` object to a list, and export the list to Excel at the end.
+Four scraper scripts polled four Zigbang endpoints in August 2024. Each is a standalone script with a simple sequential loop: request an ID, skip non-200 responses, append the payload to a list, and export the list to Excel at the end. Three of the four (`project ex.py`–`ex2.py`) also skip empty payloads; `project ex3.py` appends every 200 response and sends each request twice (`:23-24`).
 
 | Script | Endpoint | ID range | IDs polled |
 | --- | --- | --- | --- |
@@ -16,9 +16,9 @@ Four scraper scripts polled four Zigbang endpoints in August 2024. Each is a sta
 
 Design choices in the actual code:
 
-- **Sequential polling** (one request at a time) to stay under the API's informal rate tolerance.
-- **`try/except` around each request** so a single network failure does not kill a multi-hour run; failures are printed to the console and skipped.
-- **Status-code check before parsing** to separate removed listings (non-200) from empty payloads (`item` missing).
+- **Sequential polling** (one request at a time, no `sleep` between requests).
+- **`try/except` around each request** in `project ex.py`–`ex2.py`, so a single network failure does not kill a multi-hour run; failures are printed to the console and skipped. In `project ex3.py` the `try` covers only the JSON parsing, so a network error there stops the run.
+- **Status-code check before parsing** to separate removed listings (non-200) from empty payloads (`item` missing; not checked in `project ex3.py`).
 
 The scripts do **not** implement checkpointing, retry queues, or failure-log files — a run that crashed was restarted from an adjusted ID range (the range comments in the scripts record this). Console logs from the 2024 runs were not retained, which is why the README reports committed row counts rather than scrape success rates.
 
@@ -70,8 +70,8 @@ Two implementation notes, honestly stated:
 
 ## 4. Analysis and visualization scripts
 
-- `src/visualization/` (14 scripts): matplotlib line/panel charts of the macro indicators. Scripts fetch their input from the project's GitHub data mirror (`raw.githubusercontent.com/aaqq8/SteadyEstate/...`) so they run from any clone; identical files sit in `data/` if you prefer offline runs (swap the URL for a local path).
-- `src/analysis/` (5 scripts): Seoul-specific analyses — migration flows, subway land-value index, ROI by property type, transaction counts/areas.
+- `src/visualization/` (14 scripts): one (`GDP 금리 물가.py`) draws a 3-panel matplotlib chart of CPI, inflation and FX; the other 13 load one macro table each (GDP, rates, CPI, GNI) into a DataFrame and stop. Scripts fetch their input from the project's GitHub data mirror (`raw.githubusercontent.com/aaqq8/SteadyEstate/...`) so they run from any clone; identical files sit in `data/` if you prefer offline runs (swap the URL for a local path).
+- `src/analysis/` (5 scripts): each loads one Seoul table (migration flows, subway land-value index, ROI by property type, transaction counts/areas) into a DataFrame for inspection; none prints or plots.
 - `notebooks/` (4 notebooks):
   - `서울시 아파트 매매.ipynb` — district-level choropleth + marker-cluster map of apartment sale listings; its checked-in output contains the per-district listing counts cited in the README (은평구 403 … 금천구 77, 25 districts, 5,475 listings in that snapshot).
   - `서울시 아파트 월세.ipynb` — same for apartment monthly rent.
@@ -95,5 +95,5 @@ The README's headline (net domestic out-migration every year 2013–2023, cumula
 ## 6. Known cleanup debt
 
 - `real_estate_project-main/` is the original unorganized 2024 workspace (kept for provenance); the curated copies live in `src/`. Several files exist in both places — edit only the `src/` copies.
-- A few `" (1)"`-suffixed duplicate scripts remain in `src/visualization/`; the non-suffixed file is canonical.
+- A few `" (1)"`-suffixed duplicate scripts remain in `src/visualization/` (6) and `src/data_collection/` (1); the non-suffixed file is canonical.
 - `docs/` previously served as an empty placeholder; it now holds this file and the README preview images.
